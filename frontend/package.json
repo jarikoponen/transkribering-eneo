@@ -1,0 +1,35 @@
+{
+  "name": "eneo-flows-demo-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -H 0.0.0.0 -p 3000",
+    "build": "next build",
+    "test": "rm -rf .test-build && tsc --module commonjs --target es2022 --lib es2022,dom --moduleResolution node --esModuleInterop --skipLibCheck --outDir .test-build lib/upload.test.ts lib/upload.ts lib/api.ts && node --test .test-build/upload.test.js",
+    "start": "next start -H 0.0.0.0 -p 3000",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@sk-web-gui/core": "^4.6.0",
+    "@sk-web-gui/react": "^3.1.0",
+    "@sk-web-gui/segmentedcontrol": "^1.1.0",
+    "lucide-react": "0.451.0",
+    "next": "15.5.19",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "react-markdown": "10.1.0",
+    "remark-gfm": "4.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/forms": "^0.5.11",
+    "@tailwindcss/typography": "0.5.15",
+    "@types/node": "22.7.5",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "autoprefixer": "10.4.20",
+    "postcss": "8.4.47",
+    "tailwindcss": "3.4.17",
+    "typescript": "5.6.3"
+  }
+}

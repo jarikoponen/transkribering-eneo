@@ -1,0 +1,45 @@
+{
+  "name": "transkribering",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    }
+  },
+  "workspaceFolder": "/workspaces/transkribering",
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "forwardPorts": [3000, 8000],
+  "portsAttributes": {
+    "3000": {
+      "label": "Next.js frontend",
+      "onAutoForward": "notify"
+    },
+    "8000": {
+      "label": "FastAPI backend",
+      "onAutoForward": "silent"
+    }
+  },
+  "containerEnv": {
+    "PYTHONPATH": "/workspaces/transkribering/backend",
+    "PIP_DISABLE_PIP_VERSION_CHECK": "1"
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.defaultInterpreterPath": "/workspaces/transkribering/backend/.venv/bin/python",
+        "python.terminal.activateEnvironment": true,
+        "typescript.tsdk": "/workspaces/transkribering/frontend/node_modules/typescript/lib",
+        "editor.formatOnSave": true
+      },
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "dbaeumer.vscode-eslint",
+        "bradlc.vscode-tailwindcss"
+      ]
+    }
+  }
+}

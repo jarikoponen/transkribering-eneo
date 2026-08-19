@@ -1,0 +1,53 @@
+# --- Secrets ---
+# Bred matchning: allt .env* ignoreras, utom mallen. Skyddar mot .env.production,
+# .env.dokploy, .env.bak m.m. som annars hade smugit med i ett publikt repo.
+.env
+.env.*
+!.env.example
+
+# Nycklar och certifikat
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+*.keystore
+
+# Verktygs-/agentkonfiguration som kan innehålla tokens
+.claude/settings.local.json
+.mcp.json
+
+# --- Node / Next.js ---
+node_modules/
+.next/
+out/
+build/
+dist/
+*.tsbuildinfo
+next-env.d.ts
+.test-build/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.pytest_cache/
+
+# --- Editor / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+
+# --- Logs ---
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# --- Misc ---
+.cache/
+coverage/

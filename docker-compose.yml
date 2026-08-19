@@ -1,0 +1,46 @@
+services:
+  backend:
+    build: ./backend
+    environment:
+      ENEO_API_BASE: ${ENEO_API_BASE}
+      ENEO_API_KEY: ${ENEO_API_KEY}
+      APP_ACCESS_CODE: ${APP_ACCESS_CODE}
+      SESSION_SECRET: ${SESSION_SECRET}
+      COOKIE_SECURE: ${COOKIE_SECURE:-true}
+      DEMO_SPACE_ID: ${DEMO_SPACE_ID:-}
+      DEMO_SPACE_NAME: ${DEMO_SPACE_NAME:-}
+      ENEO_API_KEY_2: ${ENEO_API_KEY_2:-}
+      DEMO_SPACE_ID_2: ${DEMO_SPACE_ID_2:-}
+      DEMO_SPACE_NAME_2: ${DEMO_SPACE_NAME_2:-}
+      UPLOAD_PROXY_TIMEOUT_SECONDS: ${UPLOAD_PROXY_TIMEOUT_SECONDS:-1800}
+    expose:
+      - "8000"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - "python -c \"import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/api/healthz', timeout=2).status==200 else 1)\""
+      interval: 15s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    environment:
+      INTERNAL_API_BASE: http://backend:8000
+      NODE_ENV: production
+    expose:
+      - "3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - "node -e \"require('http').get('http://127.0.0.1:3000/api/healthz', r => process.exit(r.statusCode===200?0:1)).on('error', () => process.exit(1))\""
+      interval: 15s
+      timeout: 3s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped

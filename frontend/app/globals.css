@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Apppalett: vit/neutral yta med blå accent.
+       HSL-trippletter speglar SK:s theme-tokens. */
+    --bg: 0 0% 98%; /* gray-50  #FAFAFA – sidbakgrund */
+    --bg-2: 0 0% 94%; /* gray-100 #F0F0F0 – sekundär yta/chip */
+    --paper: 0 0% 100%; /* vit     #FFFFFF – kort */
+    --ink: 240 9% 13%; /* gray-900 #1F1F25 – primärtext */
+    --ink-soft: 240 8% 29%; /* gray-700 #444450 – sekundärtext */
+    --ink-mute: 240 2% 42%; /* gray-500 #68686D – mute */
+    --rule: 240 3% 72%; /* gray-300 #B7B7BA – tydligare kant */
+    --rule-soft: 0 0% 90%; /* gray-200 #E5E5E5 – mjuk kant */
+    --accent: 212 100% 29%; /* #004595 – brand/CTA */
+    --accent-soft: 205 43% 87%; /* #CFE0EC – ljusblå yta */
+    --accent-glow: 212 100% 29% / 0.18;
+    --record: 0 72% 51%; /* röd – inspelning (mikrofon) */
+    --ochre: 47 96% 45%; /* gul – info-/varningsruta */
+    --radius: 0.5rem; /* SK rounded ~0.375–0.5rem */
+  }
+
+  * {
+    @apply border-rule;
+  }
+
+  html,
+  body {
+    background: hsl(var(--bg));
+    color: hsl(var(--ink));
+    /* Brödtext i Inter (god läsbarhet i små storlekar); rubriker i Raleway. */
+    font-family:
+      "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    min-height: 100vh;
+  }
+
+  /* SK: rubriker/display = Raleway. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family:
+      var(--sk-fontFamily-header), "Raleway", Arial, Helvetica, sans-serif;
+  }
+
+  /* Mobile-first app shell. Bredder upp på större skärmar så att desktop
+     inte fastnar i telefonbredd. Per sida ansvarar sidans innehåll för
+     att centrera sig (mx-auto + max-w) inom denna container. */
+  .app-shell {
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: hsl(var(--bg));
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (min-width: 768px) {
+    .app-shell {
+      max-width: 760px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .app-shell {
+      max-width: 1024px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .app-shell {
+      max-width: 1180px;
+    }
+  }
+}
+
+@layer components {
+  .font-mono {
+    font-family: "Geist Mono", ui-monospace, monospace;
+  }
+
+  .eyebrow {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: hsl(var(--ink-mute));
+  }
+
+  .eyebrow-sm {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: hsl(var(--ink-mute));
+  }
+
+  /* In the new design, <em> is regular weight + accent color, not italic */
+  .accent-em {
+    font-style: normal;
+    color: hsl(var(--accent));
+    font-weight: inherit;
+  }
+
+  .quiet-em {
+    font-style: normal;
+    font-weight: 400;
+    color: hsl(var(--ink-mute));
+  }
+
+  .paper-card {
+    background: hsl(var(--paper));
+    border: 1px solid hsl(var(--rule-soft));
+    border-radius: 16px;
+  }
+
+  .rule-divider {
+    border-bottom: 1px solid hsl(var(--rule));
+  }
+
+  .rule-divider-soft {
+    border-bottom: 1px solid hsl(var(--rule-soft));
+  }
+
+  /* ----- Recording animations ----- */
+  @keyframes lyssna-pulse-ring {
+    0% {
+      inset: 0;
+      opacity: 0.6;
+    }
+    100% {
+      inset: -22px;
+      opacity: 0;
+    }
+  }
+
+  .lyssna-pulse-ring {
+    animation: lyssna-pulse-ring 2.4s ease-out infinite;
+  }
+
+  @keyframes lyssna-live-pulse {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.4;
+      transform: scale(0.8);
+    }
+  }
+
+  .lyssna-live-pulse {
+    animation: lyssna-live-pulse 1.4s ease-in-out infinite;
+  }
+
+  @keyframes lyssna-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .lyssna-blink {
+    animation: lyssna-blink 1s steps(2) infinite;
+  }
+
+  /* Recording screen background — radial accent glow at top */
+  .rec-bg {
+    background:
+      radial-gradient(
+        circle at 50% 30%,
+        hsl(var(--accent) / 0.06),
+        transparent 60%
+      ),
+      hsl(var(--bg));
+  }
+}
